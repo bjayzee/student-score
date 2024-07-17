@@ -32,4 +32,9 @@ public class StudentController {
     public ResponseEntity<?> generateReports(){
         return ResponseEntity.ok(studentService.generateReport());
     }
+
+    @GetMapping("/report/{studentId}")
+    public ResponseEntity<?> generateReportPerStudent(@PathVariable Integer studentId){
+        return ResponseEntity.ok(studentService.generateReportPerStudent(studentId));
+    }
 }

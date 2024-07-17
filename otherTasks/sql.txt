@@ -1,0 +1,49 @@
+--Question 1:
+
+SELECT MAX(salary) FROM emp WHERE salary < (SELECT MAX(salary) FROM emp);
+SELECT salary FROM (SELECT DISTINCT salary FROM emp ORDER BY salary DESC LIMIT 2) AS emp ORDER BY salary LIMIT 1;
+
+
+--Question 2:
+
+
+SELECT games.yr, games.city, city.country
+FROM games
+JOIN city ON LOWER(TRIM(games.city)) = LOWER(TRIM(city.name));
+
+
+--Question 3:
+
+LEFT JOIN:
+
+Returns all records from the left table (games) and matching records from the right table (city).
+Non-matching records from games will have NULL values for city columns.
+
+Query:
+
+SELECT games.yr, games.city, city.name, city.country
+FROM games
+LEFT JOIN city ON games.city = city.name;
+
+This query shows all games, including those without matching city data.
+
+RIGHT JOIN:
+
+Returns all records from the right table (city) and matching records from the left table (games).
+Non-matching records from city will have NULL values for games columns.
+
+Query:
+
+SELECT games.yr, games.city, city.name, city.country
+FROM games
+RIGHT JOIN city ON games.city = city.name;
+
+This query shows all cities, including those without associated games.
+
+
+--QUESTION 4:
+
+SELECT userId, AVG(duration) AS AverageDuration
+FROM sessions
+GROUP BY userId
+HAVING COUNT(id) > 1;

@@ -7,6 +7,7 @@ import com.studentscore.data.models.StudentScore;
 import com.studentscore.data.models.Subjects;
 import com.studentscore.data.repositories.StudentRepository;
 import com.studentscore.data.repositories.StudentScoreRepository;
+import com.studentscore.exception.StudentException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,10 +33,6 @@ public class StudentServiceImpl implements StudentService{
     @Override
     @Transactional
     public StudentScore addScore(String subject, double score, int studentId) {
-
-//        if (!Arrays.stream(Subjects.values()).collect(Collectors.toList()).contains(subject.toUpperCase())){
-//            throw new RuntimeException("Subject not available");
-//        }
 
         try{
             Student student = studentRepository.findById(studentId).orElseThrow(() -> new RuntimeException("student not found"));
@@ -64,8 +61,8 @@ public class StudentServiceImpl implements StudentService{
             System.out.println(students);
             List<StudentReport> reports = new ArrayList<>();
 
-            for (Student estudent : students) {
-                StudentReport report = new StudentReport(estudent);
+            for (Student student : students) {
+                StudentReport report = new StudentReport(student);
                 reports.add(report);
             }
 
@@ -73,6 +70,20 @@ public class StudentServiceImpl implements StudentService{
 
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    @Override
+    public StudentReport generateReportPerStudent(int studentId) {
+
+        try{
+            Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentException("student not found"));
+
+            return new StudentReport(student);
+
+        }catch (Exception e){
+            throw new StudentException(e.getMessage());
         }
 
     }

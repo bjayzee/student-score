@@ -15,4 +15,5 @@ public interface StudentService {
 
     List<StudentReport> generateReport();
 
+    StudentReport generateReportPerStudent(int studentId);
 }

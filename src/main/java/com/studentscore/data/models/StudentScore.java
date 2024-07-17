@@ -2,10 +2,7 @@ package com.studentscore.data.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -22,5 +19,6 @@ public class StudentScore {
     @ManyToOne
 //    @JoinColumn(name = "student_id")
     @JsonBackReference
+    @ToString.Exclude
     private Student student;
 }
